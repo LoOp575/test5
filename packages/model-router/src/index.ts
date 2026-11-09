@@ -10,9 +10,9 @@ export interface ChatMessage { role: 'system' | 'user' | 'assistant'; content: s
 export interface ChatResult { content: string; provider: Provider; model: string; tokens: { input: number; output: number }; attempts: { provider: Provider; ok: boolean; error?: string }[]; }
 
 const MODELS: Record<Provider, string> = {
-  gemini: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
-  groq: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
-  openrouter: process.env.OPENROUTER_MODEL || 'openrouter/free',
+  gemini: 'gemini-2.0-flash',
+  groq: 'llama-3.3-70b-versatile',
+  openrouter: 'openrouter/free',
 };
 const CONTEXT: Record<Provider, number> = { gemini: 1_000_000, groq: 131_072, openrouter: 131_072 };
 const ENV: Record<Provider, string> = { gemini: 'GEMINI_API_KEY', groq: 'GROQ_API_KEY', openrouter: 'OPENROUTER_API_KEY' };
@@ -30,7 +30,7 @@ export class ModelRouter {
       costUsdPer1k: 0,
     })).find(s => (!opts.needToolCalling || s.supportsToolCalling) && (!opts.minContext || s.contextWindow >= opts.minContext));
     if (!slot) throw new Error('NO_FREE_PROVIDER_CONFIGURED');
-    return { slot, reason: 'first configured free-first provider' };
+    return { slot, reason: `selected configured free-first provider: ${slot.provider}` };
   }
 
   async complete(messages: ChatMessage[], options: { preferredProvider?: Provider; maxOutputTokens?: number; temperature?: number; timeoutMs?: number } = {}): Promise<ChatResult> {
