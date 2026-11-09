@@ -1,0 +1,16 @@
+{
+  "name": "@pvc/workflow-engine",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/graph.ts",
+  "dependencies": {
+    "@pvc/agent-runtime": "*",
+    "@pvc/shared": "*"
+  },
+  "optionalDependencies": {
+    "@langchain/langgraph": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

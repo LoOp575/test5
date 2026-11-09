@@ -1,0 +1,13 @@
+{
+  "name": "@pvc/agent-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "dependencies": {
+    "@pvc/model-router": "*",
+    "@pvc/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}

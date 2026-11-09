@@ -1,0 +1,21 @@
+{
+  "name": "@pvc/database",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/schema.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.32.0",
+    "postgres": "^3.4.0",
+    "@supabase/supabase-js": "^2.43.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.22.0",
+    "typescript": "^5.5.0",
+    "tsx": "^4.10.0"
+  }
+}

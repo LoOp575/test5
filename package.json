@@ -1,0 +1,25 @@
+{
+  "name": "pvc-virtual-company",
+  "private": true,
+  "version": "1.0.0",
+  "description": "PVC Virtual Company - Satu perusahaan virtual dengan agent AI, kampus 2D tradisional Tiongkok di persawahan",
+  "workspaces": ["apps/*", "packages/*", "workers/*"],
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "build": "turbo run build",
+    "build:web": "npm run build --workspace=apps/web",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:unit": "vitest run --project unit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx packages/database/src/migrate.ts",
+    "db:seed": "tsx packages/database/src/seed.ts",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["virtual-company", "ai-agents", "langgraph", "nextjs", "supabase"],
+  "license": "MIT"
+}
