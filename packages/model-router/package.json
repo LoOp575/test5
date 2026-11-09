@@ -1,0 +1,12 @@
+{
+  "name": "@pvc/model-router",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "dependencies": {
+    "@pvc/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  }
+}
