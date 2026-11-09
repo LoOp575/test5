@@ -47,8 +47,8 @@ export class AgentLoop {
       }
       iterations++;
 
-      // PLAN (LLM)
-      const plan = await this.plan(ctx, lastOutput);
+      // PLAN (LLM bila router tersedia, heuristik sebagai fallback)
+      const plan = await this.plan(ctx, lastOutput, router);
       if (plan.action === 'finish') {
         return { success: true, output: plan.content, iterations, toolCalls, reason: 'completed' };
       }
@@ -77,16 +77,44 @@ export class AgentLoop {
     return { success: false, output: lastOutput, iterations, toolCalls, reason: 'max_iterations' };
   }
 
-  private async plan(ctx: AgentContext, observation: string): Promise<{ action: 'tool'|'finish'; toolName?: string; toolArgs?: any; content: string }> {
-    // Di production: panggil ModelRouter → LLM
-    // Mock heuristics untuk MVP/demo
+  private async plan(ctx: AgentContext, observation: string, router?: any): Promise<{ action: 'tool'|'finish'; toolName?: string; toolArgs?: any; content: string }> {
+    if (router && typeof router.complete === 'function') {
+      try {
+        const prompt = [
+          'Kamu adalah agen pelaksana dalam loop Plan→Act→Observe→Evaluate (Blueprint §7.1).',
+          `Instruksi tugas: ${ctx.instruction}`,
+          `Observasi terakhir: ${observation || '(belum ada)'}`,
+          'Balas HANYA dengan JSON valid: {"action":"tool"|"finish","toolName":"...","toolArgs":{},"content":"..."}',
+          'Pilih "tool" hanya jika perlu memanggil tool yang kamu miliki, "finish" jika selesai.',
+        ].join('\n');
+        const result = await router.complete([{ role: 'user', content: prompt }], { maxOutputTokens: 500 });
+        return this.parsePlan(result.content);
+      } catch {
+        // fallthrough ke heuristik mock
+      }
+    }
     if (observation.includes('done') || ctx.instruction.toLowerCase().includes('ringkasan')) {
       return { action: 'finish', content: `Ringkasan tugas "${ctx.instruction}" selesai. Observasi: ${observation}` };
     }
-    // Jika butuh tool, contoh: search
     if (ctx.skills.includes('web_search') && !observation.includes('Tool search')) {
       return { action: 'tool', toolName: 'search', toolArgs: { q: ctx.instruction }, content: '' };
     }
     return { action: 'finish', content: `Agent ${ctx.agent_id} menyelesaikan: ${ctx.instruction}` };
+  }
+
+  private parsePlan(text: string): { action: 'tool'|'finish'; toolName?: string; toolArgs?: any; content: string } {
+    try {
+      const cleaned = text.replace(/```json|```/g, '').trim();
+      const start = cleaned.indexOf('{');
+      const end = cleaned.lastIndexOf('}');
+      if (start >= 0 && end > start) {
+        const obj = JSON.parse(cleaned.slice(start, end + 1));
+        const action = obj.action === 'tool' ? 'tool' : 'finish';
+        return { action, toolName: obj.toolName, toolArgs: obj.toolArgs, content: obj.content ?? cleaned };
+      }
+    } catch {
+      // ignore, fallback ke content mentah
+    }
+    return { action: 'finish', content: text };
   }
 }

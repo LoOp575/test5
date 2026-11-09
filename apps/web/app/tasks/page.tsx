@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TASKS } from '@/lib/mockData';
+import { fetchTasks, createTask } from '@/lib/api';
 
 const COLS = [
   { id:'backlog', label:'Backlog', color:'bg-zinc-400' },
@@ -12,12 +13,35 @@ const COLS = [
   { id:'blocked', label:'Blocked', color:'bg-red-500' },
 ];
 
+type Task = (typeof TASKS)[number];
+
 export default function TasksPage(){
   const [filter,setFilter]=useState('all');
-  const list = filter==='all' ? TASKS : TASKS.filter(t=>t.dept===filter);
+  const [tasks,setTasks]=useState<Task[]>(TASKS);
+  const [title,setTitle]=useState('');
+  const [busy,setBusy]=useState(false);
+
+  useEffect(()=>{ fetchTasks().then(setTasks); },[]);
+
+  async function submit(){
+    const t = title.trim();
+    if(!t || busy) return;
+    setBusy(true);
+    try {
+      const res = await createTask({ title: t });
+      setTasks(prev => [{ id: res.id, project: '—', title: t, status: 'backlog', priority: 'medium', agent: '—', level: res.level ?? 'green', dept: 'HQ' }, ...prev]);
+      setTitle('');
+    } catch(e) {
+      alert(e instanceof Error ? e.message : 'Gagal membuat task');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const list = filter==='all' ? tasks : tasks.filter(t=>t.dept===filter);
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-2xl p-5 border flex items-center justify-between">
+      <div className="bg-white rounded-2xl p-5 border flex items-center justify-between gap-3 flex-wrap">
         <div><h1 className="text-xl font-black">Task Board</h1><p className="text-sm text-zinc-500 mt-1">Backlog → Ready → Working → Review → Approval → Done / Blocked (Blueprint §9)</p></div>
         <div className="hidden md:flex gap-1.5 bg-zinc-100 rounded-full p-1">
           {['all','TECH','RSCH','ANIM','BIZ','HQ'].map(f=>(
@@ -25,6 +49,12 @@ export default function TasksPage(){
           ))}
         </div>
       </div>
+
+      <div className="bg-white rounded-2xl border p-3 flex gap-2">
+        <input value={title} onChange={e=>setTitle(e.target.value)} onKeyDown={e=>e.key==='Enter'&&submit()} placeholder="Judul task baru (mis. 'Deploy ke production' → otomatis RED)" className="flex-1 px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-200" />
+        <button onClick={submit} disabled={busy} className="bg-zinc-900 text-white px-4 py-2 rounded-xl text-sm font-bold disabled:opacity-50">{busy ? '…' : '+ Buat Task'}</button>
+      </div>
+
       <div className="bg-white rounded-2xl border overflow-hidden">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 p-3 bg-zinc-50 overflow-x-auto">
           {COLS.map(col=>(
