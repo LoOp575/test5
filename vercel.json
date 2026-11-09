@@ -1,12 +1,5 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm run build --workspace=apps/web",
-  "outputDirectory": "apps/web/.next",
   "installCommand": "npm install",
-  "functions": {
-    "apps/web/app/api/**/*.ts": {
-      "maxDuration": 10
-    }
-  },
-  "crons": []
+  "buildCommand": "npm run build --workspace=apps/web"
 }
