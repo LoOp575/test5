@@ -10,7 +10,7 @@ This change adds real server-side provider calls without changing the existing c
 The router tries the preferred provider first, then Gemini, Groq, and OpenRouter. Provider errors (including rate-limit/quota errors) trigger fallback. If all configured providers fail, the request is paused. There is no paid fallback. Free model availability and quotas can change.
 
 ## Vercel setup
-Add at least one provider key and `PVC_AI_API_SECRET` in Vercel Environment Variables. Optional overrides: `GEMINI_MODEL`, `GROQ_MODEL`, `OPENROUTER_MODEL`, `APP_BASE_URL`. Redeploy after changing variables. Never use `NEXT_PUBLIC_*` for secrets or commit real keys.
+Add at least one provider key and `PVC_AI_API_SECRET` in Vercel Environment Variables. Optional metadata setting: `APP_BASE_URL`. Provider model IDs are deliberately fixed to the free-first defaults in code so an accidental model override cannot route PVC to a paid model. Redeploy after changing variables. Never use `NEXT_PUBLIC_*` for secrets or commit real keys.
 
 ## API
 - `GET /api/ai/execute`: reports configured providers only; it cannot see remaining quota.
