@@ -1,10 +1,16 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { ModelRouter } from '@pvc/model-router';
 
-const originalGeminiKey = process.env.GEMINI_API_KEY;
+const originalKeys = {
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+  GROQ_API_KEY: process.env.GROQ_API_KEY,
+  OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
+};
 afterEach(() => {
-  if (originalGeminiKey === undefined) delete process.env.GEMINI_API_KEY;
-  else process.env.GEMINI_API_KEY = originalGeminiKey;
+  for (const [key, value] of Object.entries(originalKeys)) {
+    if (value === undefined) delete process.env[key];
+    else process.env[key] = value;
+  }
 });
 
 describe('Model Router free-only', () => {
