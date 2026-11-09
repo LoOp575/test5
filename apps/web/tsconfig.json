@@ -2,10 +2,34 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": { "@/*": ["./*"], "@pvc/shared": ["../../packages/shared/src"], "@pvc/company-core": ["../../packages/company-core/src"] },
-    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@pvc/shared": [
+        "../../packages/shared/src"
+      ],
+      "@pvc/company-core": [
+        "../../packages/company-core/src"
+      ],
+      "@pvc/shared/*": [
+        "../../packages/shared/src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

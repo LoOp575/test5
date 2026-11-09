@@ -1,7 +1,6 @@
-export function cn(...classes: (string | false | null | undefined)[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+export function cn(...inputs: any[]) { return twMerge(clsx(inputs)); }
 export function formatRelativeTime(iso: string | null): string {
   if (!iso) return '—';
   const diff = Date.now() - new Date(iso).getTime();
@@ -13,11 +12,6 @@ export function formatRelativeTime(iso: string | null): string {
   const d = Math.floor(h / 24);
   return `${d} hari lalu`;
 }
-
 export function slugify(input: string): string {
-  return input
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-    .slice(0, 50);
+  return input.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
 }

@@ -1,20 +1,13 @@
-'use client';
-import { useState } from 'react';
 import { CampusMap } from '@/components/campus/CampusMap';
 import { PROJECTS, TASKS, AGENTS } from '@/lib/mockData';
 
 export default function DashboardPage() {
-  const [mobileMenu, setMobileMenu] = useState(false);
-
   return (
     <div className="space-y-3">
-      {/* Mobile toggle */}
-      <button onClick={()=>setMobileMenu(!mobileMenu)} className="lg:hidden bg-white rounded-xl px-3 py-2 text-sm font-bold shadow">☰ Menu • Dashboard</button>
-
-      {/* Campus hero */}
+      {/* Campus hero — alur utama: Owner melihat kampus → klik gedung */}
       <CampusMap />
 
-      {/* Quick stats row */}
+      {/* Ringkasan cepat */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="bg-white rounded-2xl p-4 border shadow-card">
           <div className="text-xs font-extrabold tracking-widest uppercase text-zinc-500">Produktivitas Hari Ini</div>
@@ -67,10 +60,10 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Task board mini */}
+      {/* Board preview — urutan logika Blueprint §5 */}
       <div className="bg-white rounded-2xl border shadow-card overflow-hidden">
         <div className="px-4 py-3 flex items-center justify-between border-b">
-          <div className="font-black text-zinc-900">Board Tugas — <span className="text-zinc-500 font-semibold">Alur Blueprint §5</span></div>
+          <div className="font-black text-zinc-900">Board Tugas — <span className="text-zinc-500 font-semibold">Intake → Plan → Assign → Exec → QA → Approval → Delivery</span></div>
           <span className="text-xs bg-zinc-900 text-white px-2.5 py-1 rounded-full font-bold">{TASKS.length} tugas</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 p-3 bg-zinc-50">
@@ -104,7 +97,7 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
-        <div className="px-4 py-2 bg-amber-50 border-t text-[11px] text-amber-800">🔴 Task RED (deploy/publish) memerlukan <b>Approval Owner</b> sebelum eksekusi — Sandbox & allowlist aktif.</div>
+        <div className="px-4 py-2 bg-amber-50 border-t text-[11px] text-amber-800">🔴 Task RED wajib <b>Approval Owner</b> — YELLOW sandbox allowlist. Lihat <a href="/approvals" className="underline font-bold">Persetujuan</a>.</div>
       </div>
     </div>
   );
