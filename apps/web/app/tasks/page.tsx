@@ -56,7 +56,7 @@ export default function TasksPage(){
       </div>
 
       <div className="bg-white rounded-2xl border overflow-hidden">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 p-3 bg-zinc-50 overflow-x-auto">
+        <div className="grid min-w-[1470px] grid-cols-7 gap-2 p-3 bg-zinc-50">
           {COLS.map(col=>(
             <div key={col.id} className="bg-white rounded-xl border min-h-[420px] flex flex-col">
               <div className="p-2.5 border-b flex items-center justify-between"><span className="text-[11px] font-black tracking-widest uppercase text-zinc-600">{col.label}</span><span className={`w-2 h-2 rounded-full ${col.color}`} /></div>
