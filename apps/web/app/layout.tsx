@@ -6,7 +6,6 @@ import { Sidebar } from '@/components/layout/Sidebar';
 export const metadata: Metadata = {
   title: 'PVC Virtual Company',
   description: 'Workspace perusahaan virtual untuk mengelola agent AI, proyek, tugas, dan kampus 2D.',
-  viewport: { width: 'device-width', initialScale: 1, viewportFit: 'cover' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
