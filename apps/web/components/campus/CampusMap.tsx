@@ -8,7 +8,7 @@ export function CampusMap() {
   const [showAllActivities, setShowAllActivities] = useState(false);
 
   return (
-    <div className="relative w-full h-full min-h-[560px] lg:min-h-[720px] rounded-[24px] overflow-hidden border border-white/15 shadow-2xl bg-[#0B0F1A]">
+    <div className="relative w-full h-full min-h-[520px] lg:min-h-[620px] rounded-[24px] overflow-hidden border border-white/15 shadow-2xl bg-[#0B0F1A]">
       {/* Background campus image — fill */}
       <img
         src="/images/campus-overview.jpg"
