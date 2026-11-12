@@ -114,7 +114,7 @@ export default function DashboardPage() {
                       <div className="mt-2 flex items-center justify-between gap-2">
                         <span className="truncate text-[11px] text-white/65">{task.agent.split(' ')[0]}</span>
                         <span className={`shrink-0 rounded-md border px-1.5 py-0.5 text-[10px] font-bold uppercase ${task.level === 'red' ? 'border-red-400/30 bg-red-400/10 text-red-300' : task.level === 'yellow' ? 'border-amber-400/30 bg-amber-400/10 text-amber-300' : 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300'}`}>
-                          {task.level}
+                          {task.level === 'red' ? 'Risiko tinggi' : task.level === 'yellow' ? 'Perlu perhatian' : 'Rutin'}
                         </span>
                       </div>
                     </article>
@@ -127,7 +127,7 @@ export default function DashboardPage() {
         </div>
         <div className="flex items-start gap-2 border-t border-amber-400/15 bg-amber-400/5 px-4 py-3 text-xs leading-5 text-amber-200/90">
           <span aria-hidden="true" className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
-          Task RED seperti deploy atau publikasi memerlukan persetujuan Owner sebelum dijalankan.
+          Pekerjaan berisiko tinggi, seperti menerbitkan atau memperbarui sistem, memerlukan persetujuan Owner.
         </div>
       </section>
     </div>
