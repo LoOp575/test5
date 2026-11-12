@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { DEPARTMENTS, ACTIVITIES, COMPANY } from '@/lib/mockData';
+import { ACTIVITIES } from '@/lib/mockData';
 import { BuildingPopup } from './BuildingPopup';
 
 export function CampusMap() {
@@ -8,7 +8,7 @@ export function CampusMap() {
   const [showAllActivities, setShowAllActivities] = useState(false);
 
   return (
-    <div className="relative w-full h-full min-h-[520px] lg:min-h-[620px] rounded-[24px] overflow-hidden border border-white/15 shadow-2xl bg-[#0B0F1A]">
+    <div className="w-full overflow-x-auto rounded-[24px] no-scrollbar" aria-label="Kampus virtual, geser horizontal untuk melihat seluruh area"><div className="relative min-w-[680px] min-h-[520px] lg:min-h-[620px] rounded-[24px] overflow-hidden border border-white/15 shadow-2xl bg-[#0B0F1A]">
       {/* Background campus image — fill */}
       <img
         src="/images/campus-overview.jpg"
@@ -142,6 +142,6 @@ export function CampusMap() {
 
       {/* Popup */}
       {selected && <BuildingPopup code={selected} onClose={()=>setSelected(null)} />}
-    </div>
+    </div></div>
   );
 }

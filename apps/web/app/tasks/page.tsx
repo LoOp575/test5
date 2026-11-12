@@ -43,7 +43,7 @@ export default function TasksPage(){
     <div className="space-y-4">
       <div className="bg-white rounded-2xl p-5 border flex items-center justify-between gap-3 flex-wrap">
         <div><h1 className="text-xl font-black">Task Board</h1><p className="text-sm text-zinc-500 mt-1">Backlog → Ready → Working → Review → Approval → Done / Blocked (Blueprint §9)</p></div>
-        <div className="hidden md:flex gap-1.5 bg-zinc-100 rounded-full p-1">
+        <div className="flex w-full gap-1.5 overflow-x-auto bg-zinc-100 rounded-full p-1 no-scrollbar md:w-auto">
           {['all','TECH','RSCH','ANIM','BIZ','HQ'].map(f=>(
             <button key={f} onClick={()=>setFilter(f)} className={`px-3 py-1.5 rounded-full text-xs font-bold ${filter===f?'bg-zinc-900 text-white':'text-zinc-600 hover:bg-white'}`}>{f}</button>
           ))}
@@ -56,7 +56,7 @@ export default function TasksPage(){
       </div>
 
       <div className="bg-white rounded-2xl border overflow-hidden">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2 p-3 bg-zinc-50 overflow-x-auto">
+        <div className="grid min-w-[1470px] grid-cols-7 gap-2 p-3 bg-zinc-50">
           {COLS.map(col=>(
             <div key={col.id} className="bg-white rounded-xl border min-h-[420px] flex flex-col">
               <div className="p-2.5 border-b flex items-center justify-between"><span className="text-[11px] font-black tracking-widest uppercase text-zinc-600">{col.label}</span><span className={`w-2 h-2 rounded-full ${col.color}`} /></div>
