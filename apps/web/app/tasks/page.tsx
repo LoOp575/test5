@@ -43,7 +43,7 @@ export default function TasksPage(){
     <div className="space-y-4">
       <div className="bg-white rounded-2xl p-5 border flex items-center justify-between gap-3 flex-wrap">
         <div><h1 className="text-xl font-black">Task Board</h1><p className="text-sm text-zinc-500 mt-1">Backlog → Ready → Working → Review → Approval → Done / Blocked (Blueprint §9)</p></div>
-        <div className="hidden md:flex gap-1.5 bg-zinc-100 rounded-full p-1">
+        <div className="flex w-full gap-1.5 overflow-x-auto bg-zinc-100 rounded-full p-1 no-scrollbar md:w-auto">
           {['all','TECH','RSCH','ANIM','BIZ','HQ'].map(f=>(
             <button key={f} onClick={()=>setFilter(f)} className={`px-3 py-1.5 rounded-full text-xs font-bold ${filter===f?'bg-zinc-900 text-white':'text-zinc-600 hover:bg-white'}`}>{f}</button>
           ))}
