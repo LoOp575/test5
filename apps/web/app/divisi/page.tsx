@@ -1,5 +1,4 @@
-import { DEPARTMENTS, getDeptAgents } from '@/lib/mockData';
-import { TASKS } from '@/lib/mockData';
+import { DEPARTMENTS, getDeptAgents, TASKS } from '@/lib/mockData';
 export default function DivisiPage() {
   return (
     <div className="space-y-4">
